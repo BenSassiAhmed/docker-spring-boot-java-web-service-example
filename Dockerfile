@@ -1,14 +1,8 @@
-# Use the official Ubuntu base image
-FROM ubuntu:latest
+# Use the OpenJDK 8 Alpine base image
+FROM openjdk:8-jdk-alpine
 
-# Install Java
-RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk wget && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Set environment variables for Java
-ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
+# Install necessary packages
+RUN apk --no-cache add wget tar
 
 # Download and install Apache Tomcat
 RUN wget https://downloads.apache.org/tomcat/tomcat-11/v11.0.0-M22/bin/apache-tomcat-11.0.0-M22.tar.gz && \
