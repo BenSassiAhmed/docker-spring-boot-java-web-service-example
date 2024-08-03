@@ -4,11 +4,11 @@ FROM openjdk:8-jdk-alpine
 # Install necessary packages
 RUN apk --no-cache add wget tar
 
-# Download and install Apache Tomcat 8.5.73
-RUN wget https://downloads.apache.org/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8.5.73.tar.gz && \
-    tar xzvf apache-tomcat-8.5.73.tar.gz && \
-    mv apache-tomcat-8.5.73 /usr/local/tomcat && \
-    rm apache-tomcat-8.5.73.tar.gz
+# Download and install Apache Tomcat 9.0.91
+RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz  && \
+    tar xzvf apache-tomcat-9.0.91.tar.gz && \
+    mv apache-tomcat-9.0.91 /usr/local/tomcat && \
+    rm apache-tomcat-9.0.91.tar.gz
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME /usr/local/tomcat
