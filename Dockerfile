@@ -11,10 +11,10 @@ RUN apt-get update && \
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
 # Download and install Apache Tomcat
-RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.73/bin/apache-tomcat-9.0.73.tar.gz && \
-    tar xzvf apache-tomcat-9.0.73.tar.gz && \
-    mv apache-tomcat-9.0.73 /usr/local/tomcat && \
-    rm apache-tomcat-9.0.73.tar.gz
+RUN wget https://downloads.apache.org/tomcat/tomcat-11/v11.0.0-M22/bin/apache-tomcat-11.0.0-M22.tar.gz && \
+    tar xzvf apache-tomcat-11.0.0-M22.tar.gz && \
+    mv apache-tomcat-11.0.0-M22 /usr/local/tomcat && \
+    rm apache-tomcat-11.0.0-M22.tar.gz
 
 # Set environment variables for Tomcat
 ENV CATALINA_HOME /usr/local/tomcat
