@@ -1,18 +1,30 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:8-jre-alpine
+# Use the official Ubuntu base image
+FROM ubuntu:latest
 
-# set shell to bash
-# source: https://stackoverflow.com/a/40944512/3128926
-RUN apk update && apk add bash
+# Install Java
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set the working directory to /app
-WORKDIR /app
+# Set environment variables for Java
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64
 
-# Copy the fat jar into the container at /app
-COPY /target/docker-java-app-example.jar /app
+# Download and install Apache Tomcat
+RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.73/bin/apache-tomcat-9.0.73.tar.gz && \
+    tar xzvf apache-tomcat-9.0.73.tar.gz && \
+    mv apache-tomcat-9.0.73 /usr/local/tomcat && \
+    rm apache-tomcat-9.0.73.tar.gz
 
-# Make port 8080 available to the world outside this container
+# Set environment variables for Tomcat
+ENV CATALINA_HOME /usr/local/tomcat
+ENV PATH $CATALINA_HOME/bin:$PATH
+
+# Copy your Java application WAR file to the Tomcat webapps directory
+COPY target/docker-java-app-example.jar $CATALINA_HOME/webapps/docker-java-app-example.jar
+
+# Expose port 8080
 EXPOSE 8080
 
-# Run jar file when the container launches
-CMD ["java", "-jar", "docker-java-app-example.jar"]
+# Start Tomcat in the foreground
+CMD ["catalina.sh", "run"]
