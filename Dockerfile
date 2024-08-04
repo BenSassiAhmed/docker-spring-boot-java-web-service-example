@@ -15,7 +15,7 @@ ENV CATALINA_HOME /usr/local/tomcat
 ENV PATH $CATALINA_HOME/bin:$PATH
 
 # Copy your Java application JAR file to the Tomcat webapps directory
-COPY target/docker-java-app-example.jar $CATALINA_HOME/webapps/docker-java-app-example.jar
+COPY target/docker-java-app-example.war $CATALINA_HOME/webapps/docker-java-app-example.war
 
 # Expose port 8080
 EXPOSE 8080
