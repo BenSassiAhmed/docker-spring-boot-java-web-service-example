@@ -1,18 +1,19 @@
-package com.levo.dockerexample.controller;
+package com.levo.dockerexample;
 
-import java.util.Date;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+@SpringBootApplication
+public class DockerApp extends SpringBootServletInitializer {
 
-@RestController
-@RequestMapping("docker-java-app")
-public class HelloController {
-	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test() {
-		return "docker-java-app is up and running: " + new Date();
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(DockerApp.class);
+    }
 
+    public static void main(String[] args) {
+        SpringApplication.run(DockerApp.class, args);
+    }
 }
