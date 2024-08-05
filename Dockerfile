@@ -1,24 +1,17 @@
-# Use the OpenJDK 8 Alpine base image
-FROM openjdk:8-jdk-alpine
+# Use an official OpenJDK runtime as a parent image
+FROM openjdk:8-jre-alpine
 
-# Install necessary packages
-RUN apk --no-cache add wget tar
+# set shell to bash
+RUN apk update && apk add bash
 
-# Download and install Apache Tomcat 9.0.91
-RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.91/bin/apache-tomcat-9.0.91.tar.gz  && \
-    tar xzvf apache-tomcat-9.0.91.tar.gz && \
-    mv apache-tomcat-9.0.91 /usr/local/tomcat && \
-    rm apache-tomcat-9.0.91.tar.gz
+# Set the working directory to /app
+WORKDIR /app
 
-# Set environment variables for Tomcat
-ENV CATALINA_HOME /usr/local/tomcat
-ENV PATH $CATALINA_HOME/bin:$PATH
+# Copy the  jar into the container at /app
+COPY /target/docker-java-app-example.jar /app
 
-# Copy your Java application JAR file to the Tomcat webapps directory
-COPY target/docker-java-app-example.war $CATALINA_HOME/webapps/docker-java-app-example.war
+# Make port 8085 available to the world outside this container
+EXPOSE 8085
 
-# Expose port 8080
-EXPOSE 8080
-
-# Start Tomcat in the foreground
-CMD ["catalina.sh", "run"]
+# Run jar file when the container launches
+CMD ["java", "-jar", "docker-java-app-example.jar"]
